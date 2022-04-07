@@ -149,6 +149,7 @@ int main( )
     Model pokearriba((char*)"Models/Pokeball/Poke_arriba.obj");
     Model pokeabajo((char*)"Models/Pokeball/Poke_abajo.obj");
     Model mesa ((char*)"Models/Mesa/Mesa.obj");
+    Model silla((char*)"Models/Silla/Silla.obj");
     GLuint texture;
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -212,10 +213,14 @@ int main( )
         //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         //pokeabajo.Draw(shader);
 
+        //model = glm::mat4(1);
+        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        //mesa.Draw(shader);
+        ////box.Draw(shader);
+
         model = glm::mat4(1);
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        mesa.Draw(shader);
-        //box.Draw(shader);
+        silla.Draw(shader);
 
         glBindVertexArray(0);
 
