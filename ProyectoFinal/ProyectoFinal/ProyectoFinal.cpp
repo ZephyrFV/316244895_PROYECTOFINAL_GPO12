@@ -151,6 +151,9 @@ int main( )
     Model mesa ((char*)"Models/Mesa/Mesa.obj");
     Model silla((char*)"Models/Silla/Silla.obj");
     Model lampara((char*)"Models/Lampara/Lampara.obj");
+    Model cajon1((char*)"Models/Cajon/Cajon_Abajo.obj");
+    Model cajon2((char*)"Models/Cajon/Cajon_Arriba.obj");
+    Model mueblecajon((char*)"Models/Cajon/Mueble.obj");
     GLuint texture;
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -220,9 +223,20 @@ int main( )
         ////box.Draw(shader);
 
         model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(-1.0f, 0.0f, 0.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+       
         //silla.Draw(shader);
-        lampara.Draw(shader);
+        //lampara.Draw(shader);
+        cajon1.Draw(shader);
+
+        model = glm::mat4(1);
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        cajon2.Draw(shader);
+
+        model = glm::mat4(1);
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        mueblecajon.Draw(shader);
         glBindVertexArray(0);
 
         glActiveTexture(GL_TEXTURE0);
