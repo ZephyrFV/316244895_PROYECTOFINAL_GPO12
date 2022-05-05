@@ -1,13 +1,149 @@
+newmtl Mesa:lambert4SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Texture_Table.jpg
+Ni 1.00
+newmtl Silla:lambert2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Rosa.png
+Ni 1.00
+newmtl Silla1:lambert2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Rosa.png
+Ni 1.00
+newmtl Silla2:lambert2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Rosa.png
+Ni 1.00
+newmtl bed5:Bed
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd Mueble_Cama.jpg
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 100.00
+newmtl bed5:Pillow
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd blanco.jpg
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 100.00
+newmtl bed5:Pillow2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd blanco.jpg
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 100.00
+newmtl bed5:Pillow4
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd blanco.jpg
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 100.00
+newmtl bed5:Pillow6
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd blanco.jpg
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 100.00
+newmtl bed5:lambert4SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd CobijaP.jpg
+Ni 1.00
 newmtl initialShadingGroup
 illum 4
 Kd 0.50 0.50 0.50
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 Ni 1.00
-newmtl lambert2SG
+newmtl lambert4SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd Rosa.png
+map_Kd HojasArbolOscuro.png
+Ni 1.00
+newmtl lambert5SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd TroncoArbol.png
+Ni 1.00
+newmtl lambert7SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Arbusto.png
+Ni 1.00
+newmtl lambert10SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Ventana.png
+Ni 1.00
+newmtl lambert13SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Pared.png
+Ni 1.00
+newmtl lambert14SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Garage.png
+Ni 1.00
+newmtl lambert15SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd PaletaColores1.png
+Ni 1.00
+newmtl lambert17SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Cesped.png
+Ni 1.00
+newmtl pasted__pasted__pasted__pasted__pasted__lambert3SG2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd HojasArbolClaro.png
 Ni 1.00
