@@ -136,6 +136,10 @@ int main()
 	Model Silla((char*)"Models/Silla/Silla.obj");
 	Model CajaJuguetesTapa((char*)"Models/CajaJuguetes/CajaJuguetesTapa.obj");
 	Model CajaJuguetesCuerpo((char*)"Models/CajaJuguetes/CajaJuguetesCuerpo.obj");
+	Model MuebleCajon((char*)"Models/Cajon/Mueble.obj");
+	Model CajonArriba((char*)"Models/Cajon/Cajon_Arriba.obj");
+	Model CajonAbajo((char*)"Models/Cajon/Cajon_Abajo.obj");
+	Model Lampara((char*)"Models/Lampara/Lampara.obj");
 	// Build and compile our shader program
 
 
@@ -521,6 +525,26 @@ int main()
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		CajaJuguetesCuerpo.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		MuebleCajon.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		CajonArriba.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		CajonAbajo.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Lampara.Draw(lightingShader);
 
 	
 				
