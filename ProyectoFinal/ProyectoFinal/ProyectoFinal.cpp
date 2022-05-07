@@ -140,6 +140,11 @@ int main()
 	Model CajonArriba((char*)"Models/Cajon/Cajon_Arriba.obj");
 	Model CajonAbajo((char*)"Models/Cajon/Cajon_Abajo.obj");
 	Model Lampara((char*)"Models/Lampara/Lampara.obj");
+	Model Carro((char*)"Models/Car/Carro.obj");
+	Model RoperoMueble((char*)"Models/Ropero/RoperoMueble.obj");
+	Model RoperoPuertaIzquierda((char*)"Models/Ropero/RoperoPuertaIzquierda.obj");
+	Model RoperoPuertaDerecha((char*)"Models/Ropero/RoperoPuertaDerecha.obj");
+
 	// Build and compile our shader program
 
 
@@ -545,6 +550,27 @@ int main()
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Lampara.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Carro.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		RoperoMueble.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		RoperoPuertaIzquierda.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		RoperoPuertaDerecha.Draw(lightingShader);
+
 
 	
 				

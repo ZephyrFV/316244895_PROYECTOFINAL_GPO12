@@ -46,13 +46,6 @@ Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd Garage.png
 Ni 1.00
-newmtl lambert15SG
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-map_Kd PaletaColores1.png
-Ni 1.00
 newmtl lambert17SG
 illum 4
 Kd 0.00 0.00 0.00
@@ -94,6 +87,13 @@ Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd Pintura3.png
+Ni 1.00
+newmtl lambert27SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Puerta.png
 Ni 1.00
 newmtl pasted__lambert2SG2
 illum 4
