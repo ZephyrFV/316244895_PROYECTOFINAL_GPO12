@@ -29,6 +29,7 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 void MouseCallback(GLFWwindow *window, double xPos, double yPos);
 void DoMovement();
 void animacion();
+void movimientos();
 
 // Window dimensions
 const GLuint WIDTH = 800, HEIGHT = 600;
@@ -61,6 +62,11 @@ glm::vec3 LightP1;
 float movKitX = 0.0;
 float movKitZ = 0.0;
 float rotKit = 90.0;
+float movCajonesArriba = 0;
+float movCajonesAbajo = 0;
+float movSilla = 0;
+float rotCaja = 0;
+float rotPuertaRopero = 0;
 
 bool circuito = false;
 bool recorrido1 = true;
@@ -70,6 +76,20 @@ bool recorrido4 = false;
 bool recorrido5 = false;
 bool recorridoatajo = false;
 bool atajo = true;
+bool muebles = true;
+bool cajonesArriba = false;
+bool cajonesAbajo = false;
+bool cajonesArribaCerrados = true;
+bool cajonesArribaAbiertos = false;
+bool cajonesAbajoCerrados = true;
+bool cajonesAbajoAbiertos = false;
+bool silla = false;
+bool sillaSinMover = true;
+bool cajaJuguetes = false;
+bool cajaJuguetesCerrada = true;
+bool ropero = false;
+bool roperoCerrado = true;
+
 
 // Deltatime
 GLfloat deltaTime = 0.0f;	// Time between current frame and last frame
@@ -134,7 +154,7 @@ int main()
 	Model Bed((char*)"Models/Bed/Bed.obj");
 	Model Mesa((char*)"Models/Mesa/Mesa.obj");
 	Model Silla((char*)"Models/Silla/Silla.obj");
-	Model CajaJuguetesTapa((char*)"Models/CajaJuguetes/CajaJuguetesTapa.obj");
+	Model CajaJuguetesTapa((char*)"Models/CajaJuguetes/CajaJuguetesTapa2.obj");
 	Model CajaJuguetesCuerpo((char*)"Models/CajaJuguetes/CajaJuguetesCuerpo.obj");
 	Model MuebleCajon((char*)"Models/Cajon/Mueble.obj");
 	Model CajonArriba((char*)"Models/Cajon/Cajon_Arriba.obj");
@@ -142,8 +162,8 @@ int main()
 	Model Lampara((char*)"Models/Lampara/Lampara.obj");
 	Model Carro((char*)"Models/Car/Carro.obj");
 	Model RoperoMueble((char*)"Models/Ropero/RoperoMueble.obj");
-	Model RoperoPuertaIzquierda((char*)"Models/Ropero/RoperoPuertaIzquierda.obj");
-	Model RoperoPuertaDerecha((char*)"Models/Ropero/RoperoPuertaDerecha.obj");
+	Model RoperoPuertaIzquierda((char*)"Models/Ropero/RoperoPuertaIzquierda2.obj");
+	Model RoperoPuertaDerecha((char*)"Models/Ropero/RoperoPuertaDerecha2.obj");
 
 	// Build and compile our shader program
 
@@ -328,6 +348,7 @@ int main()
 		glfwPollEvents();
 		DoMovement();
 		animacion();
+		movimientos();
 
 
 		// Clear the colorbuffer
@@ -432,6 +453,7 @@ int main()
 
 		glBindVertexArray(VAO);
 		glm::mat4 model(1);
+		glm::mat4 model2(1);
 
 
 
@@ -491,7 +513,6 @@ int main()
 		//Piso
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-50.0f, 0.0f, 0.0f));
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.02f, 0.02f, 0.02f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -518,17 +539,20 @@ int main()
 
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, movSilla));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Silla.Draw(lightingShader);
 
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-2.074f, 2.683f, 0.949));
+		model = glm::rotate(model, glm::radians(rotCaja), glm::vec3(0.0f, 0.0f, 1.0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		CajaJuguetesTapa.Draw(lightingShader);
 
 		view = camera.GetViewMatrix();
-		model = glm::mat4(1);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		model2 = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model2));
 		CajaJuguetesCuerpo.Draw(lightingShader);
 
 		view = camera.GetViewMatrix();
@@ -538,11 +562,13 @@ int main()
 
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -movCajonesArriba));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		CajonArriba.Draw(lightingShader);
 
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -movCajonesAbajo));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		CajonAbajo.Draw(lightingShader);
 
@@ -563,11 +589,15 @@ int main()
 
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-0.592f, 3.224f, 1.864));
+		model = glm::rotate(model, glm::radians(-rotPuertaRopero), glm::vec3(0.0f, 1.0f, 0.0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		RoperoPuertaIzquierda.Draw(lightingShader);
 
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-1.396f, 3.016f, 1.87));
+		model = glm::rotate(model, glm::radians(rotPuertaRopero), glm::vec3(0.0f, 1.0f, 0.0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		RoperoPuertaDerecha.Draw(lightingShader);
 
@@ -631,27 +661,27 @@ void DoMovement()
 
 	if (keys[GLFW_KEY_1])
 	{
-		range += 0.1;
-		rot += 1;
-		printf("El rango es %f\n", range);
+		cajonesArriba = true ;
 	}
 
 	if (keys[GLFW_KEY_2])
 	{
-		range -= 0.1;
-		printf("El rango es %f\n", range);
+		cajonesAbajo = true;
 	}
 
 	if (keys[GLFW_KEY_3])
 	{
-		range += 0.1;
-		printf("El spotangle es %f\n", range);
+		silla = true;
 	}
 
 	if (keys[GLFW_KEY_4])
 	{
-		range -= 0.1;
-		printf("El spotangle es %f\n", range);
+		cajaJuguetes = true;
+	}
+
+	if (keys[GLFW_KEY_5])
+	{
+		ropero = true;
 	}
 
 	// Camera controls
@@ -758,6 +788,138 @@ void DoMovement()
 
 }
 
+void movimientos()
+{
+	if (muebles)
+	{
+		//Codigo implementado para mover los cajones de arriba
+		if (cajonesArriba) //si se apreta tecla para usar cajones
+		{
+			if (cajonesArribaCerrados && cajonesArriba) //si los cajones estan cerrados entran a este if (cajonesCerrados = true)
+			{
+				movCajonesArriba += 0.001f;
+				if (movCajonesArriba > 0.1 )
+				{
+					cajonesArribaCerrados = false; //se quitan la bandera de cajones cerrados indicando que estan abiertos
+					cajonesArribaAbiertos = true; //se activa la bandera de cajones abiertos indicando que estan abiertos
+					cajonesArriba = false; //se quita la bandera de interaccion con cajones para que se tenga que pulsar nuevamente la tecla
+				}
+			}
+
+
+			if (cajonesArribaAbiertos && cajonesArriba) //si los cajones estan abiertos entran a este if (cajonesAbiertos = true)
+			{
+				movCajonesArriba -= 0.001f;
+				if (movCajonesArriba < 0)
+				{
+					cajonesArribaCerrados = true; //se activa la bandera de cajones cerrados indicando que ya se cerraron
+					cajonesArribaAbiertos = false; //se quita la bandera de cajones abiertos indicando que se cerraron
+					cajonesArriba = false; //se quita la bandera de interaccion con cajones para que se tenga que pulsar nuevamente la tecla
+				}
+			}
+		}
+
+
+		//Codigo Implementado para mover los cajones de abajo
+		if (cajonesAbajo) //si se apreta tecla para usar cajones
+		{
+			if (cajonesAbajoCerrados && cajonesAbajo) //si los cajones estan cerrados entran a este if (cajonesAbajoCerrados = true)
+			{
+				movCajonesAbajo += 0.001f;
+				if (movCajonesAbajo > 0.1)
+				{
+					cajonesAbajoCerrados = false; //se quitan la bandera de cajones cerrados indicando que estan abiertos
+					cajonesAbajoAbiertos = true; //se activa la bandera de cajones abiertos indicando que estan abiertos
+					cajonesAbajo = false; //se quita la bandera de interaccion con cajones para que se tenga que pulsar nuevamente la tecla
+				}
+			}
+
+
+			if (cajonesAbajoAbiertos && cajonesAbajo) //si los cajones estan abiertos entran a este if (cajonesAbajoAbiertos = true)
+			{
+				movCajonesAbajo -= 0.001f;
+				if (movCajonesAbajo < 0)
+				{
+					cajonesAbajoCerrados = true; //se activa la bandera de cajones cerrados indicando que ya se cerraron
+					cajonesAbajoAbiertos = false; //se quita la bandera de cajones abiertos indicando que se cerraron
+					cajonesAbajo = false; //se quita la bandera de interaccion con cajones para que se tenga que pulsar nuevamente la tecla
+				}
+			}
+		}
+
+
+		if (silla) //si se apreta tecla para usar la silla
+		{
+			if (sillaSinMover) //si la silla aun no se ha movido (sillaSinMover = true)
+			{
+				movSilla += 0.001f;
+				if (movSilla > 0.3f)
+				{
+					sillaSinMover = false; //se quita la bandera de "sillaSinMover" indicando que ya se movio 
+					silla = false; //se quita la bandera de interaccion con la silla para que se tenga que pulsar nuevamente la tecla 3
+				}
+			}
+			else
+			{
+				movSilla -= 0.001f;
+				if (movSilla < 0)
+				{
+					sillaSinMover = true; //se pone la bandera de "sillaSinMover" indicando que ya se regreso a su estado original
+					silla = false; //se quita la bandera de interaccion con la silla para que se tenga que pulsar nuevamente la tecla 3
+				}
+			}
+		}
+
+
+
+
+		if (cajaJuguetes) //si se apreta tecla para abrir la caja (cajaJuguetes=True)
+		{
+			if (cajaJuguetesCerrada) //si la caja esta cerrada entonces entra a este ciclo (cajaJuguetesCerrada)
+			{
+				rotCaja += 0.2f;
+				if (rotCaja > 90)
+				{
+					cajaJuguetesCerrada = false; //se quita la bandera de cajaJugeutesCerrada indicando que ya no esta cerrada "cajaJuguetesCerrada=false;
+					cajaJuguetes = false; //se quita la bandera de interaccion con la caja para que se tenga que pulsar nuevamente la tecla 4
+				}
+			}
+			else
+			{
+				rotCaja -= 0.2f;
+				if (rotCaja < 0)
+				{
+					cajaJuguetesCerrada = true; //se pone la bandera en tru (cajaJuguetesCerrada= true) para indicar que ya se cerro
+					cajaJuguetes = false; //se quita la bandera de interaccion con la caja para que se tenga que pulsar nuevamente la tecla 4
+				}
+			}
+		}
+
+		if (ropero) //si se apreta tecla para abrir las puertas del ropero (ropero=true)
+		{
+			if (roperoCerrado) //si el ropero esta cerrado entonces entra a este ciclo (roperoCerrado=true)
+			{
+				rotPuertaRopero += 0.2f;
+				if (rotPuertaRopero > 90)
+				{
+					roperoCerrado = false; //se quita la bandera de roperoCerradp indicando que ya no esta cerrada roperoCerrado=false;
+					ropero = false; //se quita la bandera de interaccion con el ropero para que se tenga que pulsar nuevamente la tecla 5
+				}
+			}
+			else
+			{
+				rotPuertaRopero -= 0.2f;
+				if (rotPuertaRopero < 0)
+				{
+					roperoCerrado = true; //se pone la bandera de roperoCerradp indicando que ya esta cerrada roperoCerrado=True;
+					ropero = false; //se quita la bandera de interaccion con el ropero para que se tenga que pulsar nuevamente la tecla 5
+				}
+			}
+		}
+
+
+	}
+}
 
 void animacion()
 {
@@ -873,6 +1035,8 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 		else
 			LightP1 = glm::vec3(0.0f, 0.0f, 0.0f);
 	}
+
+
 }
 
 void MouseCallback(GLFWwindow *window, double xPos, double yPos)
