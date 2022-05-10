@@ -30,6 +30,7 @@ void MouseCallback(GLFWwindow *window, double xPos, double yPos);
 void DoMovement();
 void animacion();
 void movimientos();
+void animacionCarro();
 
 // Window dimensions
 const GLuint WIDTH = 800, HEIGHT = 600;
@@ -67,6 +68,9 @@ float movCajonesAbajo = 0;
 float movSilla = 0;
 float rotCaja = 0;
 float rotPuertaRopero = 0;
+float movCarroX = 0;
+float movCarroZ = 0;
+float rotCarroY = 0;
 
 bool circuito = false;
 bool recorrido1 = true;
@@ -89,6 +93,13 @@ bool cajaJuguetes = false;
 bool cajaJuguetesCerrada = true;
 bool ropero = false;
 bool roperoCerrado = true;
+bool recorridoCarro = false;
+bool recorridoCarro1 = true;
+bool recorridoCarro2 = false;
+bool recorridoCarro3 = false;
+bool recorridoCarro4 = false;
+bool recorridoCarro5 = false;
+bool recorridoCarro6 = false;
 
 
 // Deltatime
@@ -160,7 +171,7 @@ int main()
 	Model CajonArriba((char*)"Models/Cajon/Cajon_Arriba.obj");
 	Model CajonAbajo((char*)"Models/Cajon/Cajon_Abajo.obj");
 	Model Lampara((char*)"Models/Lampara/Lampara.obj");
-	Model Carro((char*)"Models/Car/Carro.obj");
+	Model Carro((char*)"Models/Car/Carro2.obj");
 	Model RoperoMueble((char*)"Models/Ropero/RoperoMueble.obj");
 	Model RoperoPuertaIzquierda((char*)"Models/Ropero/RoperoPuertaIzquierda2.obj");
 	Model RoperoPuertaDerecha((char*)"Models/Ropero/RoperoPuertaDerecha2.obj");
@@ -349,6 +360,7 @@ int main()
 		DoMovement();
 		animacion();
 		movimientos();
+		animacionCarro();
 
 
 		// Clear the colorbuffer
@@ -579,6 +591,9 @@ int main()
 
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(8.816, 0.0f, -4.332f));
+		model = glm::translate(model, glm::vec3(movCarroX, 0.0f, movCarroZ));
+		model = glm::rotate(model, glm::radians(-rotCarroY), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Carro.Draw(lightingShader);
 
@@ -682,6 +697,11 @@ void DoMovement()
 	if (keys[GLFW_KEY_5])
 	{
 		ropero = true;
+	}
+
+	if (keys[GLFW_KEY_6])
+	{
+		recorridoCarro = true;
 	}
 
 	// Camera controls
@@ -920,6 +940,84 @@ void movimientos()
 
 	}
 }
+//Animacion compleja para carro
+void animacionCarro()
+{
+	if (recorridoCarro)
+	{
+		if (recorridoCarro1)
+		{
+			movCarroX += 0.001;
+			movCarroZ += 0.0005;
+			rotCarroY += 0.01;
+			if (movCarroX > 2)
+			{
+				recorridoCarro1 = false;
+				recorridoCarro2 = true;
+			}
+		}
+
+		if (recorridoCarro2)
+		{
+			movCarroX -= 0.001;
+			movCarroZ -= 0.0005;
+			rotCarroY -= 0.01;
+			if (movCarroX < 0)
+			{
+				recorridoCarro2 = false;
+				recorridoCarro3 = true;
+			}
+		}
+
+		if (recorridoCarro3)
+		{
+			movCarroX += 0.001;
+			movCarroZ -= 0.0005;
+			rotCarroY -= 0.01;
+			if (movCarroX > 2)
+			{
+				recorridoCarro3 = false;
+				recorridoCarro4 = true;
+			}
+		}
+
+		if (recorridoCarro4)
+		{
+			movCarroX -= 0.001;
+			movCarroZ += 0.0005;
+			rotCarroY += 0.01;
+			if (movCarroX < 0)
+			{
+				recorridoCarro4 = false;
+				recorridoCarro5 = true;
+				
+			}
+		}
+
+		if (recorridoCarro5)
+		{
+			movCarroX -= 0.001;
+			if (movCarroX < -4)
+			{
+				recorridoCarro5 = false;
+				recorridoCarro6 = true;
+			}
+		}
+
+
+		if (recorridoCarro6)
+		{
+			movCarroX += 0.001;
+			if (movCarroX >0 )
+			{
+				recorridoCarro6 = false;
+				recorridoCarro1 = true;
+				recorridoCarro = false;
+			}
+		}
+	}
+}
+
 
 void animacion()
 {
