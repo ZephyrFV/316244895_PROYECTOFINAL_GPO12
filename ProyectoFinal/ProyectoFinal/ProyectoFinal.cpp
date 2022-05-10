@@ -31,6 +31,7 @@ void DoMovement();
 void animacion();
 void movimientos();
 void animacionCarro();
+void animacionBalon();
 
 // Window dimensions
 const GLuint WIDTH = 800, HEIGHT = 600;
@@ -71,6 +72,8 @@ float rotPuertaRopero = 0;
 float movCarroX = 0;
 float movCarroZ = 0;
 float rotCarroY = 0;
+float movBalonY = 0;
+float rotBalonZ =0;
 
 bool circuito = false;
 bool recorrido1 = true;
@@ -100,6 +103,13 @@ bool recorridoCarro3 = false;
 bool recorridoCarro4 = false;
 bool recorridoCarro5 = false;
 bool recorridoCarro6 = false;
+bool recorridoBalon = false;
+bool recorridoBalon1 = true;
+bool recorridoBalon2 = false;
+bool recorridoBalon3 = false;
+bool recorridoBalon4 = false;
+bool recorridoBalon5 = false;
+bool recorridoBalon6 = false;
 
 
 // Deltatime
@@ -175,6 +185,7 @@ int main()
 	Model RoperoMueble((char*)"Models/Ropero/RoperoMueble.obj");
 	Model RoperoPuertaIzquierda((char*)"Models/Ropero/RoperoPuertaIzquierda2.obj");
 	Model RoperoPuertaDerecha((char*)"Models/Ropero/RoperoPuertaDerecha2.obj");
+	Model Balon((char*)"Models/Balon/Balon.obj");
 
 	// Build and compile our shader program
 
@@ -361,6 +372,7 @@ int main()
 		animacion();
 		movimientos();
 		animacionCarro();
+		animacionBalon();
 
 
 		// Clear the colorbuffer
@@ -616,6 +628,13 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		RoperoPuertaDerecha.Draw(lightingShader);
 
+		view = camera.GetViewMatrix();
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-0.976f, 2.57f, -1.331f));
+		model = glm::translate(model, glm::vec3(0.0f, movBalonY, 0.0f));
+		model = glm::rotate(model, glm::radians(rotBalonZ), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Balon.Draw(lightingShader);
 
 	
 				
@@ -702,6 +721,11 @@ void DoMovement()
 	if (keys[GLFW_KEY_6])
 	{
 		recorridoCarro = true;
+	}
+
+	if (keys[GLFW_KEY_7])
+	{
+		recorridoBalon = true;
 	}
 
 	// Camera controls
@@ -1018,6 +1042,81 @@ void animacionCarro()
 	}
 }
 
+void animacionBalon()
+{
+	if (recorridoBalon)
+	{
+		if (recorridoBalon1)
+		{
+			movBalonY += 0.0035;
+			rotBalonZ += 1;
+			if (movBalonY > 0.8)
+			{
+				recorridoBalon1 = false;
+				recorridoBalon2 = true;
+			}
+		}
+	
+
+		if (recorridoBalon2)
+		{
+			movBalonY -= 0.005;
+			rotBalonZ += 1;
+			if (movBalonY < 0)
+			{
+				recorridoBalon2 = false;
+				recorridoBalon3 = true;
+			}
+		}
+
+		if (recorridoBalon3)
+		{
+			movBalonY += 0.002;
+			rotBalonZ += 1;
+			if (movBalonY > 0.6)
+			{
+				recorridoBalon3 = false;
+				recorridoBalon4 = true;
+			}
+		}
+
+
+		if (recorridoBalon4)
+		{
+			movBalonY -= 0.005;
+			rotBalonZ += 1;
+			if (movBalonY < 0)
+			{
+				recorridoBalon4 = false;
+				recorridoBalon5 = true;
+			}
+		}
+
+		if (recorridoBalon5)
+		{
+			movBalonY += 0.001;
+			rotBalonZ += 1;
+			if (movBalonY > 0.2)
+			{
+				recorridoBalon5 = false;
+				recorridoBalon6 = true;
+			}
+		}
+
+
+		if (recorridoBalon6)
+		{
+			movBalonY -= 0.002;
+			rotBalonZ += 1;
+			if (movBalonY < 0)
+			{
+				recorridoBalon6 = false;
+				recorridoBalon1 = true;
+				recorridoBalon = false;
+			}
+		}
+	}
+}
 
 void animacion()
 {
