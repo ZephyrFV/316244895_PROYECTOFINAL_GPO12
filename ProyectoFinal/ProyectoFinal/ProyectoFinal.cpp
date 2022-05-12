@@ -28,7 +28,6 @@
 void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode);
 void MouseCallback(GLFWwindow *window, double xPos, double yPos);
 void DoMovement();
-void animacion();
 void movimientos();
 void animacionCarro();
 void animacionBalon();
@@ -60,56 +59,46 @@ glm::vec3 pointLightPositions[] = {
 
 glm::vec3 LightP1;
 
-//Animación del coche
-float movKitX = 0.0;
-float movKitZ = 0.0;
-float rotKit = 90.0;
-float movCajonesArriba = 0;
-float movCajonesAbajo = 0;
-float movSilla = 0;
-float rotCaja = 0;
-float rotPuertaRopero = 0;
-float movCarroX = 0;
-float movCarroZ = 0;
-float rotCarroY = 0;
-float movBalonY = 0;
-float rotBalonZ =0;
+//VARIABLES PARA LOS MOVIMIENTOS DE LAS ANIMACIONES
+float movCajonesArriba = 0; //variable para movimiento de cajon de arriba
+float movCajonesAbajo = 0; //variable para movimiento de cajon de abajo
+float movSilla = 0; //variable para movimiento de la silla
+float rotCaja = 0; //variable para la rotacion de la tapa de la caja de juguetes
+float rotPuertaRopero = 0; //variable para rotacion de las puertas del ropero
+float movCarroX = 0; //variable para movimiento del carro sobre eje X
+float movCarroZ = 0; //variable para movimiento del carro sobre eje Z
+float rotCarroY = 0; //variable para rotacion de carro sobre eje Y y simular movimiento
+float movBalonY = 0; //variable para movimiento del balon sobre eje Y y hacer que rebote
+float rotBalonZ =0;  //variable para rotacion del balon y simular que gira
 
-bool circuito = false;
-bool recorrido1 = true;
-bool recorrido2 = false;
-bool recorrido3 = false;
-bool recorrido4 = false;
-bool recorrido5 = false;
-bool recorridoatajo = false;
-bool atajo = true;
-bool muebles = true;
-bool cajonesArriba = false;
-bool cajonesAbajo = false;
-bool cajonesArribaCerrados = true;
-bool cajonesArribaAbiertos = false;
-bool cajonesAbajoCerrados = true;
-bool cajonesAbajoAbiertos = false;
-bool silla = false;
-bool sillaSinMover = true;
-bool cajaJuguetes = false;
-bool cajaJuguetesCerrada = true;
-bool ropero = false;
-bool roperoCerrado = true;
-bool recorridoCarro = false;
-bool recorridoCarro1 = true;
-bool recorridoCarro2 = false;
-bool recorridoCarro3 = false;
-bool recorridoCarro4 = false;
-bool recorridoCarro5 = false;
-bool recorridoCarro6 = false;
-bool recorridoBalon = false;
-bool recorridoBalon1 = true;
-bool recorridoBalon2 = false;
-bool recorridoBalon3 = false;
-bool recorridoBalon4 = false;
-bool recorridoBalon5 = false;
-bool recorridoBalon6 = false;
+//BANDERAS PARA ACTIVAR LAS ANIMACIONES
+bool muebles = true; //Bandera para activar el control de los muebles ()
+bool cajonesArriba = false; //Bandera para accionar la animacion del cajon de arriba
+bool cajonesAbajo = false; //Bandera para accionar la animacion del cajon de abajo
+bool cajonesArribaCerrados = true; //Bandera saber si los cajones de arriba estan cerrados
+bool cajonesArribaAbiertos = false; //Bandera saber si los cajones de arriba estan abiertos
+bool cajonesAbajoCerrados = true; //Bandera saber si los cajones de abajo estan cerrados
+bool cajonesAbajoAbiertos = false; //Bandera saber si los cajones de abajo estan abiertos
+bool silla = false; //Bandera para accionar la animacion de la silla
+bool sillaSinMover = true; //Bandera para saber si la silla ya se movio o no
+bool cajaJuguetes = false; //Bandera para activar la animacion de la caja de juguetes
+bool cajaJuguetesCerrada = true; //bandera para saber si la caja de juguetes ya se abrio
+bool ropero = false; //Bandera para accionar la animacion del ropero
+bool roperoCerrado = true; //Bandera pasa saber si el ropero esta cerrado
+bool recorridoCarro = false; //Bandera para accionar el recorrido del carro
+bool recorridoCarro1 = true; //Bandera para cordinar el recorrido 1 del carro
+bool recorridoCarro2 = false; //Bandera para cordinar el recorrido 2 del carro
+bool recorridoCarro3 = false; //Bandera para cordinar el recorrido 3 del carro
+bool recorridoCarro4 = false; //Bandera para cordinar el recorrido 4 del carro
+bool recorridoCarro5 = false; //Bandera para cordinar el recorrido 5 del carro
+bool recorridoCarro6 = false; //Bandera para cordinar el recorrido 6 del carro
+bool recorridoBalon = false; //Bandera para activar el movimiento del balon
+bool recorridoBalon1 = true; //Bandera para cordinar el recorrido 1 del balon
+bool recorridoBalon2 = false;//Bandera para cordinar el recorrido 2 del balon
+bool recorridoBalon3 = false;//Bandera para cordinar el recorrido 3 del balon
+bool recorridoBalon4 = false;//Bandera para cordinar el recorrido 4 del balon
+bool recorridoBalon5 = false;//Bandera para cordinar el recorrido 5 del balon
+bool recorridoBalon6 = false;//Bandera para cordinar el recorrido 6 del balon
 
 
 // Deltatime
@@ -165,12 +154,9 @@ int main()
 	// OpenGL options
 	glEnable(GL_DEPTH_TEST);
 
+	//CARGA DE OBJETOS A MODELAR
 	Shader lightingShader("Shaders/lighting.vs", "Shaders/lighting.frag");
 	Shader lampShader("Shaders/lamp.vs", "Shaders/lamp.frag");
-
-	Model Carroseria((char*)"Models/Carro/Carroseria.obj");
-	Model LLanta((char*)"Models/Carro/Wheel.obj");
-	Model Piso((char*)"Models/Carro/Piso.obj");
 	Model Casa((char*)"Models/Casa/Casa.obj");
 	Model Bed((char*)"Models/Bed/Bed.obj");
 	Model Mesa((char*)"Models/Mesa/Mesa.obj");
@@ -369,7 +355,6 @@ int main()
 		// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
 		glfwPollEvents();
 		DoMovement();
-		animacion();
 		movimientos();
 		animacionCarro();
 		animacionBalon();
@@ -466,107 +451,36 @@ int main()
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-		// Bind diffuse map
-		/*glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture1);*/
-
-		// Bind specular map
-		/*glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, texture2);*/
-
-
 		glBindVertexArray(VAO);
 		glm::mat4 model(1);
-		glm::mat4 model2(1);
-
-
-
-		//Carga de modelo 
-		//Carroceria
-		view = camera.GetViewMatrix();
-		model = glm::mat4(1);
-		model = glm::translate(model, PosIni + glm::vec3(movKitX, 0, movKitZ));
-		model = glm::rotate(model, glm::radians(rotKit), glm::vec3(0.0f, 1.0f, 0.0));
-		model = glm::scale(model, glm::vec3(0.02f, 0.02f, 0.02f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Carroseria.Draw(lightingShader);
-
-		//Llanta Delantera Der
-		view = camera.GetViewMatrix();
-		model = glm::mat4(1);
-		model = glm::translate(model, PosIni + glm::vec3(movKitX, 0, movKitZ));
-		model = glm::rotate(model, glm::radians(rotKit), glm::vec3(0.0f, 1.0f, 0.0));
-		model = glm::scale(model, glm::vec3(0.02f, 0.02f, 0.02f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		LLanta.Draw(lightingShader);
-
-		//Llanta Trasera Der
-		view = camera.GetViewMatrix();
-		model = glm::mat4(1);
-		model = glm::translate(model, PosIni + glm::vec3(movKitX, 0, movKitZ));
-		model = glm::rotate(model, glm::radians(rotKit), glm::vec3(0.0f, 1.0f, 0.0));
-		model = glm::translate(model, glm::vec3(1.7f, 0.5f, -2.9f));
-		model = glm::scale(model, glm::vec3(0.02f, 0.02f, 0.02f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		LLanta.Draw(lightingShader);
-
-
-		//Llanta Delantera Izq
-		view = camera.GetViewMatrix();
-		model = glm::mat4(1);
-		model = glm::translate(model, PosIni + glm::vec3(movKitX, 0, movKitZ));
-		model = glm::rotate(model, glm::radians(rotKit), glm::vec3(0.0f, 1.0f, 0.0));
-		model = glm::translate(model, glm::vec3(-1.7f, 0.8f, 2.6f));
-		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0));
-		model = glm::scale(model, glm::vec3(0.02f, 0.02f, 0.02f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		LLanta.Draw(lightingShader);
-
-		//Llanta Trasera Izq
-		view = camera.GetViewMatrix();
-		model = glm::mat4(1);
-		model = glm::translate(model, PosIni + glm::vec3(movKitX, 0, movKitZ));
-		model = glm::rotate(model, glm::radians(rotKit), glm::vec3(0.0f, 1.0f, 0.0));
-		model = glm::translate(model, glm::vec3(-1.7f, 0.8f, -2.9f));
-		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0));
-		model = glm::scale(model, glm::vec3(0.02f, 0.02f, 0.02f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		LLanta.Draw(lightingShader);
-
-
-		//Piso
-		view = camera.GetViewMatrix();
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.02f, 0.02f, 0.02f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//Piso.Draw(lightingShader);
 		
-		//Casa
+		//DIBUJO DE OBJETOS
+		//CASA
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
-		//model = glm::translate(model, glm::vec3(-70.0f, 0.0f, 0.0f));
-		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(1.2f, 0.02f, 0.02f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Casa.Draw(lightingShader);
 
+		//CAMA
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Bed.Draw(lightingShader);
 
+		//MESA
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Mesa.Draw(lightingShader);
 
+		//SILLA
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, movSilla));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Silla.Draw(lightingShader);
 
+		//TAPA DE CAJA DE JUGUETES
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-2.074f, 2.683f, 0.949));
@@ -574,33 +488,39 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		CajaJuguetesTapa.Draw(lightingShader);
 
+		//CAJA DE JUGUETES
 		view = camera.GetViewMatrix();
-		model2 = glm::mat4(1);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model2));
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		CajaJuguetesCuerpo.Draw(lightingShader);
 
+		//MUEBLE DE LOS CAJONES
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		MuebleCajon.Draw(lightingShader);
 
+		//CAJONES DE ARRIBA
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -movCajonesArriba));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		CajonArriba.Draw(lightingShader);
 
+		//CAJONES DE ABAJO
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -movCajonesAbajo));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		CajonAbajo.Draw(lightingShader);
 
+		//LAMPARA
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Lampara.Draw(lightingShader);
 
+		//CARRO
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(8.816, 0.0f, -4.332f));
@@ -609,11 +529,13 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Carro.Draw(lightingShader);
 
+		//MUEBLE DE ROPERO
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		RoperoMueble.Draw(lightingShader);
 
+		//PUERTA IZQUIERDA DE ROPERO
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-0.592f, 3.224f, 1.864));
@@ -621,6 +543,7 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		RoperoPuertaIzquierda.Draw(lightingShader);
 
+		//PUERTA DERECHA DE ROPERO
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-1.396f, 3.016f, 1.87));
@@ -628,6 +551,7 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		RoperoPuertaDerecha.Draw(lightingShader);
 
+		//BALON
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-0.976f, 2.57f, -1.331f));
@@ -636,7 +560,6 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Balon.Draw(lightingShader);
 
-	
 				
 		glBindVertexArray(0);
 
@@ -692,38 +615,37 @@ int main()
 // Moves/alters the camera positions based on user input
 void DoMovement()
 {
-
-	if (keys[GLFW_KEY_1])
+	if (keys[GLFW_KEY_1]) //Mueve cajones de arriba
 	{
 		cajonesArriba = true ;
 	}
 
-	if (keys[GLFW_KEY_2])
+	if (keys[GLFW_KEY_2]) //Mueve Cajones de abajo
 	{
 		cajonesAbajo = true;
 	}
 
-	if (keys[GLFW_KEY_3])
+	if (keys[GLFW_KEY_3]) //Mueve la silla
 	{
 		silla = true;
 	}
 
-	if (keys[GLFW_KEY_4])
+	if (keys[GLFW_KEY_4]) //Abre la caja de juguetes
 	{
 		cajaJuguetes = true;
 	}
 
-	if (keys[GLFW_KEY_5])
+	if (keys[GLFW_KEY_5]) //Abre el ropero
 	{
 		ropero = true;
 	}
 
-	if (keys[GLFW_KEY_6])
+	if (keys[GLFW_KEY_6]) //Mueve el carro
 	{
 		recorridoCarro = true;
 	}
 
-	if (keys[GLFW_KEY_7])
+	if (keys[GLFW_KEY_7]) //Mueve el balon
 	{
 		recorridoBalon = true;
 	}
@@ -752,86 +674,10 @@ void DoMovement()
 	if (keys[GLFW_KEY_D] || keys[GLFW_KEY_RIGHT])
 	{
 		camera.ProcessKeyboard(RIGHT, deltaTime);
-
-
-	}
-
-	if (keys[GLFW_KEY_T])
-	{
-		//pointLightPositions[0].x -= 0.1f;
-		//pointLightPositions[0].y -= 0.1f;
-		pointLightPositions[0].z += 0.1f;
-	}
-	if (keys[GLFW_KEY_G])
-	{
-		//pointLightPositions[0].x -= 0.1f;
-		//pointLightPositions[0].y -= 0.1f;
-		pointLightPositions[0].z -= 0.1f;
-	}
-
-	if (keys[GLFW_KEY_Y])
-	{
-		pointLightPositions[1].x += 0.1f;
-		pointLightPositions[1].y += 0.1f;
-		pointLightPositions[1].z += 0.1f;
-	}
-
-	if (keys[GLFW_KEY_H])
-	{
-		pointLightPositions[1].x -= 0.1f;
-		pointLightPositions[1].y -= 0.1f;
-		pointLightPositions[1].z -= 0.1f;
-	}
-	if (keys[GLFW_KEY_U])
-	{
-		pointLightPositions[2].x += 0.1f;
-		pointLightPositions[2].y += 0.1f;
-		pointLightPositions[2].z += 0.1f;
-	}
-	if (keys[GLFW_KEY_J])
-	{
-		pointLightPositions[2].x -= 0.1f;
-		pointLightPositions[2].y -= 0.1f;
-		pointLightPositions[2].z -= 0.1f;
-	}
-	if (keys[GLFW_KEY_I])
-	{
-		pointLightPositions[3].x += 0.1f;
-		pointLightPositions[3].y += 0.1f;
-		pointLightPositions[3].z += 0.1f;
-		circuito = true;
-		atajo = false;
-	}
-
-	if (keys[GLFW_KEY_N])
-	{
-		pointLightPositions[3].x += 0.1f;
-		pointLightPositions[3].y += 0.1f;
-		pointLightPositions[3].z += 0.1f;
-		atajo = true;
-	}
-
-	if (keys[GLFW_KEY_M])
-	{
-		pointLightPositions[3].x += 0.1f;
-		pointLightPositions[3].y += 0.1f;
-		pointLightPositions[3].z += 0.1f;
-		atajo = false;
-	}
-
-	if (keys[GLFW_KEY_O])
-	{
-		circuito = false;
-	}
-	if (keys[GLFW_KEY_K])
-	{
-		pointLightPositions[3].x -= 0.1f;
-		pointLightPositions[3].y -= 0.1f;
-		pointLightPositions[3].z -= 0.1f;
 	}
 
 }
-
+//Animacion para todos los objetos
 void movimientos()
 {
 	if (muebles)
@@ -964,6 +810,7 @@ void movimientos()
 
 	}
 }
+
 //Animacion compleja para carro
 void animacionCarro()
 {
@@ -1042,6 +889,7 @@ void animacionCarro()
 	}
 }
 
+//Animacion compleja para el balon
 void animacionBalon()
 {
 	if (recorridoBalon)
@@ -1118,88 +966,6 @@ void animacionBalon()
 	}
 }
 
-void animacion()
-{
-
-	//Movimiento del coche
-	if (circuito)
-	{
-		if (recorrido1)
-		{
-			movKitX += 0.01f;
-			if (movKitX > 90)
-			{
-				if (atajo) 
-				{
-					recorrido1 = false;
-					recorridoatajo = true;
-				}
-				else
-				{
-					recorrido1 = false;
-					recorrido2 = true;
-				}
-			}
-
-		}
-		if (recorrido2)
-		{
-			rotKit = 0;
-			movKitZ += 0.01f;
-			if (movKitZ > 90)
-			{
-				recorrido2 = false;
-				recorrido3 = true;
-
-			}
-		}
-
-		if (recorrido3)
-		{
-			rotKit = 270;
-			movKitX -= 0.01f;
-			if (movKitX < 0)
-			{
-				recorrido3 = false;
-				recorrido4 = true;
-			}
-		}
-
-		if (recorrido4)
-		{
-			rotKit = 180;
-			movKitZ -= 0.01f;
-			if (movKitZ < 0)
-			{
-				recorrido4 = false;
-				recorrido5 = true;
-			}
-		}
-		if (recorrido5)
-		{
-			rotKit = 90;
-			movKitX += 0.1f;
-			if (movKitX > 0)
-			{
-				recorrido5 = false;
-				recorrido1 = true;
-			}
-		}
-		if (recorridoatajo)
-		{
-			rotKit = 315;
-			movKitX -= 0.01f;
-			movKitZ += 0.01f;
-			if (movKitZ > 90)
-			{
-				recorridoatajo = false;
-				recorrido4 = true;
-			}
-		}
-
-
-	}
-}
 
 // Is called whenever a key is pressed/released via GLFW
 void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode)
