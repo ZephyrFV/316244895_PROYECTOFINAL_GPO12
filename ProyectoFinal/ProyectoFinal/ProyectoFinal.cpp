@@ -65,9 +65,11 @@ float movCajonesAbajo = 0; //variable para movimiento de cajon de abajo
 float movSilla = 0; //variable para movimiento de la silla
 float rotCaja = 0; //variable para la rotacion de la tapa de la caja de juguetes
 float rotPuertaRopero = 0; //variable para rotacion de las puertas del ropero
-float movCarroX = 0; //variable para movimiento del carro sobre eje X
-float movCarroZ = 0; //variable para movimiento del carro sobre eje Z
-float rotCarroY = 0; //variable para rotacion de carro sobre eje Y y simular movimiento
+float movCarroX = 61.784; //variable para movimiento del carro sobre eje X
+float movCarroZ = 6.896;
+float movCarroY = 0; //variable para movimiento del carro sobre eje Z
+float rotCarroY = 90;
+float rotCarroZ = 0;//variable para rotacion de carro sobre eje Y y simular movimiento
 float movBalonY = 0; //variable para movimiento del balon sobre eje Y y hacer que rebote
 float rotBalonZ =0;  //variable para rotacion del balon y simular que gira
 
@@ -92,6 +94,41 @@ bool recorridoCarro3 = false; //Bandera para cordinar el recorrido 3 del carro
 bool recorridoCarro4 = false; //Bandera para cordinar el recorrido 4 del carro
 bool recorridoCarro5 = false; //Bandera para cordinar el recorrido 5 del carro
 bool recorridoCarro6 = false; //Bandera para cordinar el recorrido 6 del carro
+bool recorridoCarro7 = false; //Bandera para cordinar el recorrido 1 del carro
+bool recorridoCarro8 = false; //Bandera para cordinar el recorrido 2 del carro
+bool recorridoCarro9 = false; //Bandera para cordinar el recorrido 3 del carro
+bool recorridoCarro10 = false; //Bandera para cordinar el recorrido 4 del carro
+bool recorridoCarro11 = false; //Bandera para cordinar el recorrido 5 del carro
+bool recorridoCarro12 = false; //Bandera para cordinar el recorrido 6 del carro
+bool recorridoCarro13 = false; //Bandera para cordinar el recorrido 4 del carro
+bool recorridoCarro14 = false; //Bandera para cordinar el recorrido 5 del carro
+bool recorridoCarro15 = false; //Bandera para cordinar el recorrido 6 del carro
+bool recorridoCarro16 = false; //Bandera para cordinar el recorrido 4 del carro
+bool recorridoCarro17 = false; //Bandera para cordinar el recorrido 5 del carro
+bool recorridoCarro18 = false; //Bandera para cordinar el recorrido 6 del carro
+bool recorridoCarro19 = false; //Bandera para cordinar el recorrido 4 del carro
+bool recorridoCarro20 = false; //Bandera para cordinar el recorrido 5 del carro
+bool recorridoCarro21 = false; //Bandera para cordinar el recorrido 6 del carro
+bool recorridoCarro22 = false; //Bandera para cordinar el recorrido 5 del carro
+bool recorridoCarro23 = false; //Bandera para cordinar el recorrido 6 del carro
+bool recorridoCarro24 = false; //Bandera para cordinar el recorrido 5 del carro
+bool recorridoCarro25 = false; //Bandera para cordinar el recorrido 6 del carro
+bool recorridoCarro26 = false; //Bandera para cordinar el recorrido 5 del carro
+bool recorridoCarro27 = false; //Bandera para cordinar el recorrido 6 del carro
+bool recorridoCarro28 = false; //Bandera para cordinar el recorrido 6 del carro
+bool recorridoCarro29 = false; //Bandera para cordinar el recorrido 5 del carro
+bool recorridoCarro30 = false; //Bandera para cordinar el recorrido 6 del carro
+bool recorridoCarro31 = false; //Bandera para cordinar el recorrido 6 del carro
+bool recorridoCarro32 = false; //Bandera para cordinar el recorrido 6 del carro
+bool recorridoCarro33 = false; //Bandera para cordinar el recorrido 6 del carro
+bool recorridoCarro34 = false; //Bandera para cordinar el recorrido 6 del carro
+bool recorridoCarro35 = false; //Bandera para cordinar el recorrido 6 del carro
+bool recorridoCarro36 = false; //Bandera para cordinar el recorrido 6 del carro
+bool recorridoCarro37 = false; //Bandera para cordinar el recorrido 6 del carro
+
+
+
+
 bool recorridoBalon = false; //Bandera para activar el movimiento del balon
 bool recorridoBalon1 = true; //Bandera para cordinar el recorrido 1 del balon
 bool recorridoBalon2 = false;//Bandera para cordinar el recorrido 2 del balon
@@ -172,6 +209,9 @@ int main()
 	Model RoperoPuertaIzquierda((char*)"Models/Ropero/RoperoPuertaIzquierda2.obj");
 	Model RoperoPuertaDerecha((char*)"Models/Ropero/RoperoPuertaDerecha2.obj");
 	Model Balon((char*)"Models/Balon/Balon.obj");
+	Model Pista((char*)"Models/Pista/Race_Track.obj");
+	Model CarroPista((char*)"Models/Pista/Carro2.obj");
+
 
 	// Build and compile our shader program
 
@@ -459,26 +499,26 @@ int main()
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Casa.Draw(lightingShader);
+		//Casa.Draw(lightingShader);
 
 		//CAMA
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Bed.Draw(lightingShader);
+		//Bed.Draw(lightingShader);
 
 		//MESA
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Mesa.Draw(lightingShader);
+		//Mesa.Draw(lightingShader);
 
 		//SILLA
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, movSilla));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Silla.Draw(lightingShader);
+		//Silla.Draw(lightingShader);
 
 		//TAPA DE CAJA DE JUGUETES
 		view = camera.GetViewMatrix();
@@ -486,39 +526,39 @@ int main()
 		model = glm::translate(model, glm::vec3(-2.074f, 2.683f, 0.949));
 		model = glm::rotate(model, glm::radians(rotCaja), glm::vec3(0.0f, 0.0f, 1.0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		CajaJuguetesTapa.Draw(lightingShader);
+		//CajaJuguetesTapa.Draw(lightingShader);
 
 		//CAJA DE JUGUETES
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		CajaJuguetesCuerpo.Draw(lightingShader);
+		//CajaJuguetesCuerpo.Draw(lightingShader);
 
 		//MUEBLE DE LOS CAJONES
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		MuebleCajon.Draw(lightingShader);
+		//MuebleCajon.Draw(lightingShader);
 
 		//CAJONES DE ARRIBA
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -movCajonesArriba));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		CajonArriba.Draw(lightingShader);
+		//CajonArriba.Draw(lightingShader);
 
 		//CAJONES DE ABAJO
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -movCajonesAbajo));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		CajonAbajo.Draw(lightingShader);
+		//CajonAbajo.Draw(lightingShader);
 
 		//LAMPARA
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Lampara.Draw(lightingShader);
+		//Lampara.Draw(lightingShader);
 
 		//CARRO
 		view = camera.GetViewMatrix();
@@ -527,13 +567,13 @@ int main()
 		model = glm::translate(model, glm::vec3(movCarroX, 0.0f, movCarroZ));
 		model = glm::rotate(model, glm::radians(-rotCarroY), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Carro.Draw(lightingShader);
+		//Carro.Draw(lightingShader);
 
 		//MUEBLE DE ROPERO
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		RoperoMueble.Draw(lightingShader);
+		//RoperoMueble.Draw(lightingShader);
 
 		//PUERTA IZQUIERDA DE ROPERO
 		view = camera.GetViewMatrix();
@@ -541,7 +581,7 @@ int main()
 		model = glm::translate(model, glm::vec3(-0.592f, 3.224f, 1.864));
 		model = glm::rotate(model, glm::radians(-rotPuertaRopero), glm::vec3(0.0f, 1.0f, 0.0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		RoperoPuertaIzquierda.Draw(lightingShader);
+		//RoperoPuertaIzquierda.Draw(lightingShader);
 
 		//PUERTA DERECHA DE ROPERO
 		view = camera.GetViewMatrix();
@@ -549,7 +589,7 @@ int main()
 		model = glm::translate(model, glm::vec3(-1.396f, 3.016f, 1.87));
 		model = glm::rotate(model, glm::radians(rotPuertaRopero), glm::vec3(0.0f, 1.0f, 0.0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		RoperoPuertaDerecha.Draw(lightingShader);
+		//RoperoPuertaDerecha.Draw(lightingShader);
 
 		//BALON
 		view = camera.GetViewMatrix();
@@ -558,7 +598,24 @@ int main()
 		model = glm::translate(model, glm::vec3(0.0f, movBalonY, 0.0f));
 		model = glm::rotate(model, glm::radians(rotBalonZ), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Balon.Draw(lightingShader);
+		//Balon.Draw(lightingShader);
+
+		//CARRO
+		view = camera.GetViewMatrix();
+		model = glm::mat4(1);
+		//CORDENADAS BASE
+		//model = glm::translate(model, glm::vec3(61.784f, 0.0f, 6.896f));
+		//model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(movCarroX, movCarroY, movCarroZ));
+		model = glm::rotate(model, glm::radians(-rotCarroY), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-rotCarroZ), glm::vec3(0.0f, 0.0f, 0.1f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		CarroPista.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Pista.Draw(lightingShader);
 
 				
 		glBindVertexArray(0);
@@ -818,10 +875,8 @@ void animacionCarro()
 	{
 		if (recorridoCarro1)
 		{
-			movCarroX += 0.001;
-			movCarroZ += 0.0005;
-			rotCarroY += 0.01;
-			if (movCarroX > 2)
+			movCarroZ += 0.02;
+			if (movCarroZ > 42)
 			{
 				recorridoCarro1 = false;
 				recorridoCarro2 = true;
@@ -830,10 +885,10 @@ void animacionCarro()
 
 		if (recorridoCarro2)
 		{
-			movCarroX -= 0.001;
-			movCarroZ -= 0.0005;
-			rotCarroY -= 0.01;
-			if (movCarroX < 0)
+			movCarroX -= 0.02;
+			movCarroZ += 0.02;
+			rotCarroY += 0.3;
+			if (rotCarroY >180 )
 			{
 				recorridoCarro2 = false;
 				recorridoCarro3 = true;
@@ -842,10 +897,8 @@ void animacionCarro()
 
 		if (recorridoCarro3)
 		{
-			movCarroX += 0.001;
-			movCarroZ -= 0.0005;
-			rotCarroY -= 0.01;
-			if (movCarroX > 2)
+			movCarroX -= 0.02;
+			if (movCarroX < 6)
 			{
 				recorridoCarro3 = false;
 				recorridoCarro4 = true;
@@ -854,10 +907,10 @@ void animacionCarro()
 
 		if (recorridoCarro4)
 		{
-			movCarroX -= 0.001;
-			movCarroZ += 0.0005;
-			rotCarroY += 0.01;
-			if (movCarroX < 0)
+			movCarroX -= 0.02;
+			movCarroY += 0.01;
+			rotCarroZ -= 0.2;
+			if (rotCarroZ < -34)
 			{
 				recorridoCarro4 = false;
 				recorridoCarro5 = true;
@@ -867,8 +920,9 @@ void animacionCarro()
 
 		if (recorridoCarro5)
 		{
-			movCarroX -= 0.001;
-			if (movCarroX < -4)
+			movCarroX -= 0.02;
+			movCarroY += 0.01;
+			if (movCarroX < -8)
 			{
 				recorridoCarro5 = false;
 				recorridoCarro6 = true;
@@ -878,12 +932,345 @@ void animacionCarro()
 
 		if (recorridoCarro6)
 		{
-			movCarroX += 0.001;
-			if (movCarroX >0 )
+			movCarroX -= 0.02;
+			movCarroY -= 0.01;
+			rotCarroZ += 0.2;
+			if (rotCarroZ >34 )
 			{
 				recorridoCarro6 = false;
+				recorridoCarro7 = true;
+			}
+		}
+
+		if (recorridoCarro7)
+		{
+			movCarroX -= 0.02;
+			movCarroY -= 0.01;
+			rotCarroZ -= 0.2;
+			if (rotCarroZ < 0)
+			{
+				recorridoCarro7 = false;
+				recorridoCarro8 = true;
+			}
+		}
+
+		if (recorridoCarro8)
+		{
+			movCarroX -= 0.02;
+			movCarroY -= 0.01;
+			if (movCarroY < 0)
+			{
+				recorridoCarro8 = false;
+				recorridoCarro9 = true;
+			}
+		}
+		if (recorridoCarro9)
+		{
+			movCarroX -= 0.02;
+			if (movCarroX < -38)
+			{
+				recorridoCarro9 = false;
+				recorridoCarro10 = true;
+			}
+		}
+		if (recorridoCarro10)
+		{
+			movCarroX -= 0.02;
+			movCarroZ += 0.02;
+			rotCarroY -= 0.18;
+			if (rotCarroY < 90)
+			{
+				recorridoCarro10 = false;
+				recorridoCarro11 = true;
+			}
+		}
+
+		if (recorridoCarro11)
+		{
+			movCarroX += 0.02;
+			movCarroZ += 0.02;
+			rotCarroY -= 0.18;
+			if (rotCarroY < 0)
+			{
+				recorridoCarro11 = false;
+				recorridoCarro12 = true;
+			}
+		}
+
+		if (recorridoCarro12)
+		{
+			movCarroX += 0.02;
+			if (movCarroX > -17)
+			{
+				recorridoCarro12 = false;
+				recorridoCarro13 = true;
+			}
+		}
+
+		if (recorridoCarro13)
+		{
+			movCarroX += 0.02;
+			movCarroZ -= 0.02;
+			rotCarroY -= 0.18;
+			if (rotCarroY < -90)
+			{
+				recorridoCarro13 = false;
+				recorridoCarro14 = true;
+			}
+		}
+
+		if (recorridoCarro14)
+		{
+			movCarroZ -= 0.02;
+			if (movCarroZ < 5)
+			{
+				recorridoCarro14 = false;
+				recorridoCarro15 = true;
+			}
+		}
+
+		if (recorridoCarro15)
+		{
+			movCarroX += 0.02;
+			movCarroZ -= 0.02;
+			rotCarroY += 0.2;
+			if (rotCarroY > 0)
+			{
+				recorridoCarro15 = false;
+				recorridoCarro16 = true;
+			}
+		}
+
+		if (recorridoCarro16)
+		{
+			movCarroX += 0.02;
+			if (movCarroX > 17)
+			{
+				recorridoCarro16 = false;
+				recorridoCarro17 = true;
+			}
+		}
+
+		if (recorridoCarro17)
+		{
+			movCarroX += 0.02;
+			movCarroZ += 0.02;
+			rotCarroY += 0.18;
+			if (rotCarroY > 90)
+			{
+				recorridoCarro17 = false;
+				recorridoCarro18 = true;
+			}
+		}
+
+		if (recorridoCarro18)
+		{
+			movCarroX -= 0.02;
+			movCarroZ += 0.02;
+			rotCarroY += 0.18;
+			if (rotCarroY > 180)
+			{
+				recorridoCarro18 = false;
+				recorridoCarro19 = true;
+			}
+		}
+		if (recorridoCarro19)
+		{
+			movCarroX -= 0.02;
+			movCarroY += 0.004;
+			rotCarroZ -= 0.08;
+			if (rotCarroZ < -34)
+			{
+				recorridoCarro19 = false;
+				recorridoCarro20 = true;
+
+			}
+		}
+
+		if (recorridoCarro20)
+		{
+			movCarroX -= 0.02;
+			movCarroY += 0.012;
+			rotCarroZ += 0.04;
+			if (rotCarroZ > 0)
+			{
+				recorridoCarro20 = false;
+				recorridoCarro21 = true;
+
+			}
+		}
+
+		if (recorridoCarro21)
+		{
+			movCarroX -= 0.02;
+			movCarroY -= 0.011;
+			rotCarroZ += 0.04;
+			if (rotCarroZ > 34)
+			{
+				recorridoCarro21 = false;
+				recorridoCarro22 = true;
+
+			}
+		}
+
+		if (recorridoCarro22)
+		{
+			movCarroX -= 0.02;
+			movCarroY -= 0.0052;
+			rotCarroZ -= 0.08;
+			if (rotCarroZ < 0)
+			{
+				recorridoCarro22 = false;
+				recorridoCarro23 = true;
+
+			}
+		}
+
+		if (recorridoCarro23)
+		{
+			movCarroX -= 0.02;
+			movCarroY = 0;
+			if (movCarroX < -70)
+			{
+				recorridoCarro23 = false;
+				recorridoCarro24 = true;
+
+			}
+		}
+
+		if (recorridoCarro24)
+		{
+			movCarroX -= 0.02;
+			movCarroZ -= 0.02;
+			rotCarroY += 0.18;
+			if (rotCarroY > 270)
+			{
+				recorridoCarro24 = false;
+				recorridoCarro25 = true;
+			}
+		}
+
+		if (recorridoCarro25)
+		{
+			movCarroZ -= 0.02;
+			if (movCarroZ < -40)
+			{
+				recorridoCarro25 = false;
+				recorridoCarro26 = true;
+			}
+		}
+
+		if (recorridoCarro26)
+		{
+			movCarroX += 0.02;
+			movCarroZ -= 0.02;
+			rotCarroY += 0.18;
+			if (rotCarroY > 360)
+			{
+				recorridoCarro26 = false;
+				recorridoCarro27 = true;
+			}
+		}
+
+		if (recorridoCarro27)
+		{
+			movCarroX += 0.02;
+			if (movCarroX > -6)
+			{
+				recorridoCarro27 = false;
+				recorridoCarro28 = true;
+				rotCarroY = 0;
+			}
+		}
+
+		if (recorridoCarro28)
+		{
+			movCarroX += 0.02;
+			movCarroZ -= 0.02;
+			rotCarroY -= 0.18;
+			if (rotCarroY < -90)
+			{
+				recorridoCarro28 = false;
+				recorridoCarro29 = true;
+			}
+		}
+
+
+		if (recorridoCarro29)
+		{
+			movCarroX += 0.02;
+			movCarroZ -= 0.02;
+			rotCarroY += 0.18;
+			if (rotCarroY > 0)
+			{
+				recorridoCarro29 = false;
+				recorridoCarro30 = true;
+			}
+		}
+
+		if (recorridoCarro30)
+		{
+			movCarroX += 0.02;
+			if (movCarroX > 70)
+			{
+				recorridoCarro30 = false;
+				recorridoCarro31 = true;
+			}
+		}
+
+		if (recorridoCarro31)
+		{
+			movCarroX += 0.02;
+			movCarroZ += 0.02;
+			rotCarroY += 0.18;
+			if (rotCarroY > 90)
+			{
+				recorridoCarro31 = false;
+				recorridoCarro32 = true;
+			}
+		}
+
+		if (recorridoCarro32)
+		{
+			movCarroZ += 0.02;
+			if (movCarroZ > -45)
+			{
+				recorridoCarro32 = false;
+				recorridoCarro33 = true;
+			}
+		}
+		if (recorridoCarro33)
+		{
+			movCarroX -= 0.02;
+			movCarroZ += 0.02;
+			rotCarroY += 0.22;
+			if (rotCarroY > 180)
+			{
+				recorridoCarro33 = false;
+				recorridoCarro34 = true;
+			}
+		}
+
+		if (recorridoCarro34)
+		{
+			movCarroX -= 0.02;
+			movCarroZ += 0.02;
+			rotCarroY -= 0.18;
+			if (rotCarroY < 90)
+			{
+				recorridoCarro34 = false;
+				recorridoCarro35 = true;
+			}
+		}
+
+		if (recorridoCarro35)
+		{	
+			movCarroX = 61.784;
+			movCarroZ += 0.02;
+			if (movCarroZ > 6.896)
+			{
+				recorridoCarro35 = false;
 				recorridoCarro1 = true;
-				recorridoCarro = false;
 			}
 		}
 	}
